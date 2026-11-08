@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ayşem için 💗</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg1:#ffe3ec; --bg2:#ffc2d4; --pink:#ff4d79; --deep:#c9184a; --ink:#5a1730; --card:#fff7fa;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'Baloo 2',system-ui,sans-serif;
+    background:radial-gradient(circle at 30% 20%,var(--bg1),var(--bg2));
+    color:var(--ink);
+    min-height:100vh; overflow-x:hidden;
+    display:flex; align-items:center; justify-content:center;
+    padding:24px;
+  }
+  .stage{width:100%;max-width:520px;text-align:center;position:relative;z-index:2}
+  .card{
+    background:var(--card); border-radius:28px; padding:34px 24px 30px;
+    box-shadow:0 20px 50px rgba(201,24,74,.18);
+    animation:pop .5s cubic-bezier(.2,1.4,.4,1);
+  }
+  .hidden{display:none !important}
+  @keyframes pop{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
+  h1{font-size:30px;line-height:1.15;font-weight:800;color:var(--deep);margin-bottom:10px}
+  p{font-size:18px;line-height:1.4}
+  .sub{opacity:.75;margin-bottom:24px}
+  button{
+    font-family:inherit; font-size:20px; font-weight:700;
+    background:var(--pink); color:#fff; border:none; border-radius:999px;
+    padding:14px 30px; cursor:pointer; margin-top:22px;
+    box-shadow:0 8px 0 var(--deep); transition:transform .08s, box-shadow .08s;
+    -webkit-tap-highlight-color:transparent;
+  }
+  button:active{transform:translateY(6px);box-shadow:0 2px 0 var(--deep)}
+
+  /* meter */
+  .meter-wrap{position:relative;margin:26px 0 6px;height:46px}
+  .meter{
+    position:absolute;left:0;top:0;height:46px;width:100%;
+    background:#ffe0ea;border-radius:999px;border:3px solid var(--pink);
+  }
+  .fill{
+    position:absolute;left:0;top:0;height:46px;width:0%;
+    background:linear-gradient(90deg,#ff8fab,var(--pink),var(--deep));
+    border-radius:999px; transition:width .6s cubic-bezier(.3,1.3,.5,1);
+    display:flex;align-items:center;justify-content:flex-end;padding-right:12px;
+    color:#fff;font-weight:800;font-size:18px;white-space:nowrap;overflow:visible;
+  }
+  .label{font-size:24px;font-weight:800;color:var(--deep);min-height:36px;margin-top:14px}
+  .shake{animation:shake .45s}
+  .bigshake{animation:shake .3s infinite}
+  @keyframes shake{
+    0%,100%{transform:translate(0,0)}20%{transform:translate(-8px,3px) rotate(-1deg)}
+    40%{transform:translate(7px,-4px) rotate(1deg)}60%{transform:translate(-6px,2px)}80%{transform:translate(5px,-2px)}
+  }
+  .error{
+    background:#2b0a16;color:#ffd6e2;border-radius:18px;padding:18px;margin-top:20px;
+    font-family:ui-monospace,Menlo,monospace;font-size:15px;text-align:left;line-height:1.5;
+    animation:pop .4s;
+  }
+  .error b{color:#ff4d79}
+
+  /* counter */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 10px}
+  .box{background:#ffe0ea;border-radius:18px;padding:12px 4px}
+  .num{font-size:30px;font-weight:800;color:var(--deep);line-height:1}
+  .unit{font-size:14px;opacity:.7;margin-top:4px}
+  .since{font-size:16px;opacity:.75}
+
+  /* final */
+  .final-title{font-size:26px;font-weight:800;color:var(--deep)}
+  .pointer{display:flex;flex-direction:column;align-items:center;margin-top:10px}
+  .busen{font-size:40px;font-weight:800;color:var(--pink);transform:rotate(-6deg);letter-spacing:1px}
+  .arrow{width:90px;height:90px;animation:bob 1s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(10px)}}
+  .donkey{width:240px;max-width:75vw;height:auto;animation:wobble 2.4s ease-in-out infinite;transform-origin:50% 90%}
+  @keyframes wobble{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+  .tiny{font-size:15px;opacity:.7;margin-top:8px}
+
+  /* hearts */
+  .heart{position:fixed;top:-40px;z-index:1;pointer-events:none;animation:fall linear forwards}
+  @keyframes fall{to{transform:translateY(115vh) rotate(360deg)}}
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- 1: soru -->
+  <div class="card" id="s1">
+    <h1>Seni işte bu kadar seviyorum</h1>
+    <div class="meter-wrap">
+      <div class="meter"></div>
+      <div class="fill" id="fill"></div>
+    </div>
+    <div class="label" id="label">&nbsp;</div>
+    <button id="measure">Ölç 📏</button>
+    <div class="error hidden" id="err">
+      <b>HATA 💥</b> sevgi_olcer.exe çöktü<br>
+      Sebep: değer çok büyük (∞ + 1)<br>
+      <br>
+      Bu kadar sevgiyi ölçebilecek bir birim yok.<br>
+      Ölçemedim, ama hissediyorum. 💗
+    </div>
+    <button id="toCounter" class="hidden">Peki ne zamandan beri? ⏳</button>
+  </div>
+
+  <!-- 2: sayaç -->
+  <div class="card hidden" id="s2">
+    <h1>31 Aralık 2025'ten beri</h1>
+    <p class="sub">seni seviyorum. Tam olarak şu kadar süredir:</p>
+    <div class="grid">
+      <div class="box"><div class="num" id="d">0</div><div class="unit">gün</div></div>
+      <div class="box"><div class="num" id="h">0</div><div class="unit">saat</div></div>
+      <div class="box"><div class="num" id="m">0</div><div class="unit">dakika</div></div>
+      <div class="box"><div class="num" id="sec">0</div><div class="unit">saniye</div></div>
+    </div>
+    <p class="since">…ve her saniye biraz daha fazla.</p>
+    <button id="toFinal">Son bir şey var… 👀</button>
+  </div>
+
+  <!-- 3: final -->
+  <div class="card hidden" id="s3">
+    <div class="final-title">Dünyanın en çok sevilen varlığı:</div>
+    <div class="pointer">
+      <div class="busen">bu sen</div>
+      <svg class="arrow" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M30 8 C 70 20, 70 55, 50 82" fill="none" stroke="#ff4d79" stroke-width="7" stroke-linecap="round"/>
+        <path d="M34 70 L50 88 L64 68" fill="none" stroke="#ff4d79" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+
+    <!-- sevimli eşek -->
+    <svg class="donkey" viewBox="0 0 300 320" role="img" aria-label="Sevimli bir eşek">
+      <!-- kalp -->
+      <path d="M150 40 C150 22,126 18,120 34 C114 18,90 22,90 40 C90 58,120 70,120 78 C120 70,150 58,150 40Z" transform="translate(30,-20)" fill="#ff4d79"/>
+      <!-- kulaklar -->
+      <g>
+        <ellipse cx="95" cy="95" rx="26" ry="70" transform="rotate(-22 95 95)" fill="#8d939c"/>
+        <ellipse cx="95" cy="100" rx="13" ry="48" transform="rotate(-22 95 100)" fill="#f4a9bd"/>
+        <ellipse cx="205" cy="95" rx="26" ry="70" transform="rotate(22 205 95)" fill="#8d939c"/>
+        <ellipse cx="205" cy="100" rx="13" ry="48" transform="rotate(22 205 100)" fill="#f4a9bd"/>
+      </g>
+      <!-- yele -->
+      <path d="M125 120 L132 92 L142 116 L150 86 L158 116 L168 92 L175 120Z" fill="#4a4e55"/>
+      <!-- kafa -->
+      <ellipse cx="150" cy="190" rx="85" ry="92" fill="#a3a9b2"/>
+      <!-- burun bölgesi -->
+      <ellipse cx="150" cy="245" rx="68" ry="50" fill="#efe4d6"/>
+      <!-- burun delikleri -->
+      <ellipse cx="128" cy="240" rx="8" ry="11" fill="#6b5a4e"/>
+      <ellipse cx="172" cy="240" rx="8" ry="11" fill="#6b5a4e"/>
+      <!-- gülümseme -->
+      <path d="M126 266 Q150 286 174 266" fill="none" stroke="#6b5a4e" stroke-width="5" stroke-linecap="round"/>
+      <!-- dişler -->
+      <rect x="140" y="268" width="9" height="11" rx="2" fill="#fff" stroke="#6b5a4e" stroke-width="2"/>
+      <rect x="151" y="268" width="9" height="11" rx="2" fill="#fff" stroke="#6b5a4e" stroke-width="2"/>
+      <!-- gözler -->
+      <circle cx="115" cy="172" r="20" fill="#1f1f24"/>
+      <circle cx="185" cy="172" r="20" fill="#1f1f24"/>
+      <circle cx="122" cy="164" r="7" fill="#fff"/>
+      <circle cx="192" cy="164" r="7" fill="#fff"/>
+      <circle cx="110" cy="180" r="3" fill="#fff"/>
+      <circle cx="180" cy="180" r="3" fill="#fff"/>
+      <!-- kirpikler -->
+      <path d="M97 160 L88 152 M101 154 L95 145 M203 160 L212 152 M199 154 L205 145" stroke="#1f1f24" stroke-width="4" stroke-linecap="round"/>
+      <!-- yanaklar -->
+      <ellipse cx="88" cy="210" rx="15" ry="9" fill="#ff8fab" opacity=".7"/>
+      <ellipse cx="212" cy="210" rx="15" ry="9" fill="#ff8fab" opacity=".7"/>
+    </svg>
+
+    <p style="font-size:22px;font-weight:800;margin-top:6px">Benim eşeğim 😂❤️</p>
+    <p class="tiny">Seni seviyorum Ayşem. Ölçülemeyecek kadar.</p>
+    <button id="again">Bir daha 🔁</button>
+  </div>
+
+</div>
+
+<script>
+  const steps = [
+    {w:20,  t:"20%",       l:"biraz… 🙂"},
+    {w:50,  t:"50%",       l:"yok, daha fazla 😊"},
+    {w:85,  t:"85%",       l:"çok 😍"},
+    {w:100, t:"100%",      l:"çok çok çok 🥰"},
+    {w:160, t:"%340",      l:"taşıyor galiba 😳"},
+    {w:260, t:"%9.999",    l:"dur dur dur 😵"},
+    {w:420, t:"∞",         l:"SİSTEM DAYANAMIYOR 💥"}
+  ];
+  let i = 0;
+  const fill = document.getElementById('fill');
+  const label = document.getElementById('label');
+  const btn = document.getElementById('measure');
+  const s1 = document.getElementById('s1');
+
+  btn.addEventListener('click', () => {
+    if (i > 0) return;
+    btn.classList.add('hidden');
+    step();
+  });
+
+  function step(){
+    if (i >= steps.length) return;
+    const s = steps[i];
+    fill.style.width = s.w + '%';
+    fill.textContent = s.t;
+    label.textContent = s.l;
+    s1.classList.remove('shake'); void s1.offsetWidth;
+    if (s.w > 100) s1.classList.add('shake');
+    hearts(4 + i * 4);
+    i++;
+    if (i < steps.length) {
+      setTimeout(step, 900);
+    } else {
+      document.body.classList.add('bigshake');
+      setTimeout(() => {
+        document.body.classList.remove('bigshake');
+        fill.style.width = '100%';
+        fill.textContent = 'ölçülemez';
+        document.getElementById('err').classList.remove('hidden');
+        document.getElementById('toCounter').classList.remove('hidden');
+        hearts(40);
+      }, 1200);
+    }
+  }
+
+  function show(id){
+    ['s1','s2','s3'].forEach(x => document.getElementById(x).classList.add('hidden'));
+    const el = document.getElementById(id);
+    el.classList.remove('hidden');
+    el.style.animation = 'none'; void el.offsetWidth; el.style.animation = '';
+  }
+
+  document.getElementById('toCounter').addEventListener('click', () => { show('s2'); hearts(15); });
+  document.getElementById('toFinal').addEventListener('click', () => { show('s3'); hearts(50); });
+  document.getElementById('again').addEventListener('click', () => {
+    i = 0; fill.style.width = '0%'; fill.textContent = ''; label.innerHTML = '&nbsp;';
+    btn.classList.remove('hidden');
+    document.getElementById('err').classList.add('hidden');
+    document.getElementById('toCounter').classList.add('hidden');
+    show('s1');
+  });
+
+  // sayaç: 31 Aralık 2025, 00:00 (Türkiye saati)
+  const start = new Date('2025-12-31T00:00:00+03:00').getTime();
+  function tick(){
+    let diff = Math.max(0, Math.floor((Date.now() - start) / 1000));
+    const d = Math.floor(diff / 86400); diff %= 86400;
+    const h = Math.floor(diff / 3600);  diff %= 3600;
+    const m = Math.floor(diff / 60);    const s = diff % 60;
+    document.getElementById('d').textContent = d;
+    document.getElementById('h').textContent = h;
+    document.getElementById('m').textContent = m;
+    document.getElementById('sec').textContent = s;
+  }
+  tick(); setInterval(tick, 1000);
+
+  // kalp yağmuru
+  const emojis = ['💗','💖','💕','❤️','💘'];
+  function hearts(n){
+    for (let k = 0; k < n; k++){
+      const h = document.createElement('div');
+      h.className = 'heart';
+      h.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+      h.style.left = Math.random()*100 + 'vw';
+      h.style.fontSize = (16 + Math.random()*22) + 'px';
+      h.style.animationDuration = (2.5 + Math.random()*2.5) + 's';
+      h.style.animationDelay = (Math.random()*0.8) + 's';
+      document.body.appendChild(h);
+      setTimeout(() => h.remove(), 6000);
+    }
+  }
+  hearts(10);
+</script>
+</body>
+</html>
